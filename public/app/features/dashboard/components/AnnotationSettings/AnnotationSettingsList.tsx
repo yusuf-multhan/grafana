@@ -47,14 +47,12 @@ export const AnnotationSettingsList = ({ dashboard, onNew, onEdit }: Props) => {
                 {annotation.builtIn ? (
                   <td style={{ width: '90%' }} className="pointer" onClick={() => onEdit(idx)}>
                     <Button size="sm" fill="text">
-                      {' '}
                       <em className="muted">{annotation.name} (Built-in)</em>
                     </Button>
                   </td>
                 ) : (
                   <td className="pointer" onClick={() => onEdit(idx)}>
                     <Button size="sm" fill="text">
-                      {' '}
                       {annotation.name}
                     </Button>
                   </td>
