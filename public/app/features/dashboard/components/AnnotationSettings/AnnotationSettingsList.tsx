@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { arrayUtils } from '@grafana/data';
 import { getDataSourceSrv } from '@grafana/runtime';
-import { DeleteButton, Icon, IconButton, VerticalGroup } from '@grafana/ui';
+import { Button, DeleteButton, IconButton, VerticalGroup } from '@grafana/ui';
 import EmptyListCTA from 'app/core/components/EmptyListCTA/EmptyListCTA';
 
 import { DashboardModel } from '../../state/DashboardModel';
@@ -46,11 +46,17 @@ export const AnnotationSettingsList = ({ dashboard, onNew, onEdit }: Props) => {
               <tr key={`${annotation.name}-${idx}`}>
                 {annotation.builtIn ? (
                   <td style={{ width: '90%' }} className="pointer" onClick={() => onEdit(idx)}>
-                    <Icon name="comment-alt" /> &nbsp; <em className="muted">{annotation.name} (Built-in)</em>
+                    <Button size="sm" fill="text">
+                      {' '}
+                      <em className="muted">{annotation.name} (Built-in)</em>
+                    </Button>
                   </td>
                 ) : (
                   <td className="pointer" onClick={() => onEdit(idx)}>
-                    <Icon name="comment-alt" /> &nbsp; {annotation.name}
+                    <Button size="sm" fill="text">
+                      {' '}
+                      {annotation.name}
+                    </Button>
                   </td>
                 )}
                 <td className="pointer" onClick={() => onEdit(idx)}>
