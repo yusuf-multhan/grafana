@@ -11,7 +11,7 @@ title: Images in notifications
 
 # Images in notifications
 
-Images in notifications helps recipients of alert notifications better understand why an alert has fired or resolved by including an image of the panel associated with the Grafana managed alert rule.
+Images in notifications helps recipients of alert notifications better understand why an alert has fired or resolved by including an image of the panel associated with the Grafana managed alert rule. 
 
 > **Note**: Images in notifications are not available for Grafana Mimir and Loki managed alert rules, or when Grafana is set up to send alert notifications to an external Alertmanager.
 
@@ -31,6 +31,8 @@ Images are stored in the [data]({{< relref "../setup-grafana/configure-grafana/#
 To use images in notifications, Grafana must be set up to use [image rendering]({{< relref "../setup-grafana/image-rendering/" >}}). It is also recommended that Grafana is set up to upload images to an [external image store]({{< relref "../setup-grafana/configure-grafana/#external_image_storage" >}}) such as Amazon S3, Azure Blob Storage, Google Cloud Storage or even Grafana.
 
 ## Configuration
+
+> **Note**: Grafana Cloud users can request this feature by [opening a support ticket in the Cloud Portal](https://grafana.com/profile/org#support).
 
 If Grafana has been set up to use [image rendering]({{< relref "../setup-grafana/image-rendering/" >}}) images in notifications can be turned on via the `capture` option in `[unified_alerting.screenshots]`:
 
