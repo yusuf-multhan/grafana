@@ -1,8 +1,10 @@
-FROM node:16-alpine3.15 as js-builder
+FROM node:16-alpine3.16 as js-builder
 
 ENV NODE_OPTIONS=--max_old_space_size=8000
 
 WORKDIR /grafana
+
+RUN apk add --no-cache build-base python3
 
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
@@ -20,9 +22,9 @@ COPY emails emails
 ENV NODE_ENV production
 RUN yarn build
 
-FROM golang:1.19.2-alpine3.15 as go-builder
+FROM golang:1.19.2-alpine3.16 as go-builder
 
-RUN apk add --no-cache gcc g++ make
+RUN apk add --no-cache gcc g++ make binutils-gold
 
 WORKDIR /grafana
 
@@ -39,7 +41,7 @@ RUN go mod verify
 RUN make build-go
 
 # Final stage
-FROM alpine:3.15.6
+FROM alpine:3.16.2
 
 LABEL maintainer="Grafana team <hello@grafana.com>"
 
