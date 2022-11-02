@@ -32,7 +32,7 @@ To use images in notifications, Grafana must be set up to use [image rendering](
 
 ## Configuration
 
-> **Note**: Grafana Cloud users can request this feature by [opening a support ticket in the Cloud Portal](https://grafana.com/profile/org#support).
+> **Note:** Grafana Cloud users can request this feature by [opening a support ticket in the Cloud Portal](https://grafana.com/profile/org#support).
 
 If Grafana has been set up to use [image rendering]({{< relref "../setup-grafana/image-rendering/" >}}) images in notifications can be turned on via the `capture` option in `[unified_alerting.screenshots]`:
 
