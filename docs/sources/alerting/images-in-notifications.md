@@ -11,7 +11,7 @@ title: Images in notifications
 
 # Images in notifications
 
-Images in notifications helps recipients of alert notifications better understand why an alert has fired or resolved by including an image of the panel associated with the Grafana managed alert rule. 
+Images in notifications helps recipients of alert notifications better understand why an alert has fired or resolved by including an image of the panel associated with the Grafana managed alert rule.
 
 > **Note**: Images in notifications are not available for Grafana Mimir and Loki managed alert rules, or when Grafana is set up to send alert notifications to an external Alertmanager.
 
