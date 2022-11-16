@@ -3,10 +3,11 @@
     "declarationDir": "./compiled",
     "emitDeclarationOnly": true,
     "isolatedModules": true,
+    "resolveJsonModule": true,
     "rootDirs": ["."],
-    "types": ["cypress"]
+    "types": ["cypress", "node"]
   },
   "exclude": ["dist/**/*"],
   "extends": "@grafana/tsconfig",
-  "include": ["src/**/*.ts", "cypress/support/index.d.ts"]
+  "include": ["src/**/*.ts", "./rollup.config.ts", "cypress/support/index.d.ts"]
 }

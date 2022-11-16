@@ -4,12 +4,14 @@
     "declarationDir": "./compiled",
     "emitDeclarationOnly": true,
     "isolatedModules": true,
+    "resolveJsonModule": true,
     "rootDirs": ["."]
   },
   "exclude": ["dist/**/*"],
   "extends": "@grafana/tsconfig",
   "include": [
     "src/**/*.ts*",
+    "./rollup.config.ts",
     "../../public/app/types/jquery/*.ts",
     "../../public/app/types/*.d.ts",
     "../grafana-ui/src/types/*.d.ts"

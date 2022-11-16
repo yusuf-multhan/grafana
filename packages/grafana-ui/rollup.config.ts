@@ -5,7 +5,7 @@ import dts from 'rollup-plugin-dts';
 import esbuild from 'rollup-plugin-esbuild';
 import { externals } from 'rollup-plugin-node-externals';
 
-const pkg = require('./package.json');
+import pkg from './package.json' assert { type: 'json' };
 
 export default [
   {
@@ -28,7 +28,7 @@ export default [
     ],
   },
   {
-    input: './compiled/index.d.ts',
+    input: './compiled/src/index.d.ts',
     plugins: [dts()],
     output: {
       file: pkg.publishConfig.types,

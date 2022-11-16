@@ -32,8 +32,8 @@
     "./LICENSE_APACHE2"
   ],
   "scripts": {
-    "build": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.ts",
-    "bundle": "rollup -c rollup.config.ts",
+    "build": "tsc -p ./tsconfig.build.json && rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "bundle": "rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
     "clean": "rimraf ./dist ./compiled ./package.tgz",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook:build": "build-storybook -o ./dist/storybook -c .storybook",
@@ -116,6 +116,7 @@
     "@mdx-js/react": "1.6.22",
     "@rollup/plugin-image": "3.0.1",
     "@rollup/plugin-node-resolve": "15.0.1",
+    "@rollup/plugin-typescript": "9.0.2",
     "@storybook/addon-a11y": "6.5.12",
     "@storybook/addon-actions": "6.5.12",
     "@storybook/addon-docs": "6.5.12",
