@@ -117,7 +117,7 @@ func TestDiscordNotifier(t *testing.T) {
 			expMsgError: nil,
 		},
 		{
-			name: "Invalid message template",
+			name: "Invalid notification template",
 			settings: `{
 				"avatar_url": "https://grafana.com/static/assets/img/fav32.png",
 				"url": "http://localhost",

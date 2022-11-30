@@ -126,7 +126,7 @@ func (vn *VictoropsNotifier) Notify(ctx context.Context, as ...*types.Alert) (bo
 	}
 
 	if tmplErr != nil {
-		vn.log.Warn("failed to expand message template. "+
+		vn.log.Warn("failed to expand notification template. "+
 			"", "error", tmplErr.Error())
 		tmplErr = nil
 	}

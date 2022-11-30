@@ -5672,7 +5672,7 @@
         },
         "type": "array"
       },
-      "MessageTemplate": {
+      "NotificationTemplate": {
         "properties": {
           "name": {
             "type": "string"
@@ -5686,7 +5686,7 @@
         },
         "type": "object"
       },
-      "MessageTemplateContent": {
+      "NotificationTemplateContent": {
         "properties": {
           "template": {
             "type": "string"
@@ -5694,9 +5694,9 @@
         },
         "type": "object"
       },
-      "MessageTemplates": {
+      "NotificationTemplates": {
         "items": {
-          "$ref": "#/components/schemas/MessageTemplate"
+          "$ref": "#/components/schemas/NotificationTemplate"
         },
         "type": "array"
       },
@@ -13549,17 +13549,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MessageTemplates"
+                  "$ref": "#/components/schemas/NotificationTemplates"
                 }
               }
             },
-            "description": "MessageTemplates"
+            "description": "NotificationTemplates"
           },
           "404": {
             "description": " Not found."
           }
         },
-        "summary": "Get all message templates.",
+        "summary": "Get all notification templates.",
         "tags": [
           "provisioning"
         ]
@@ -13607,17 +13607,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MessageTemplate"
+                  "$ref": "#/components/schemas/NotificationTemplate"
                 }
               }
             },
-            "description": "MessageTemplate"
+            "description": "NotificationTemplate"
           },
           "404": {
             "description": " Not found."
           }
         },
-        "summary": "Get a message template.",
+        "summary": "Get a notification template.",
         "tags": [
           "provisioning"
         ]
@@ -13639,7 +13639,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MessageTemplateContent"
+                "$ref": "#/components/schemas/NotificationTemplateContent"
               }
             }
           },
@@ -13650,11 +13650,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MessageTemplate"
+                  "$ref": "#/components/schemas/NotificationTemplate"
                 }
               }
             },
-            "description": "MessageTemplate"
+            "description": "NotificationTemplate"
           },
           "400": {
             "content": {
