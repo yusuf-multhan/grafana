@@ -883,3 +883,13 @@ func (c updateRulesOrderInGroup) Exec(sess *xorm.Session, migrator *migrator.Mig
 	}
 	return nil
 }
+
+func AddForErrorColumnMigration(mg *migrator.Migrator) {
+	if !mg.Cfg.UnifiedAlerting.IsEnabled() {
+		return
+	}
+	mg.AddMigration(
+		"add for error column to alert_rule table",
+		migrator.NewRawSQLMigration("ALTER TABLE alert_rule ADD COLUMN for_error INTEGER DEFAULT 0;"),
+	)
+}

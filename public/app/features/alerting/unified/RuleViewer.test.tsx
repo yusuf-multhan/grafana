@@ -95,6 +95,7 @@ const mockGrafanaRule = {
   },
   rulerRule: {
     for: '',
+    for_error: '',
     annotations: {},
     labels: {},
     grafana_alert: {
