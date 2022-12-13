@@ -252,8 +252,8 @@ require (
 	github.com/getkin/kin-openapi v0.103.0
 	github.com/golang-migrate/migrate/v4 v4.7.0
 	github.com/google/go-github/v45 v45.2.0
+	github.com/grafana/alerting v0.0.0-20221123220210-67a9f4464f1f
 	github.com/grafana/codejen v0.0.3
-	github.com/grafana/alerting v0.0.0-20221114124403-e7c6a1e5f9c3
 	github.com/grafana/dskit v0.0.0-20211011144203-3a88ec0b675f
 	github.com/huandu/xstrings v1.3.1
 	github.com/jmoiron/sqlx v1.3.5
@@ -268,6 +268,8 @@ require (
 	gocloud.dev v0.25.0
 	k8s.io/client-go v12.0.0+incompatible // gets replaced with v0.25.0
 )
+
+require k8s.io/apimachinery v0.25.0
 
 require (
 	cloud.google.com/go v0.102.0 // indirect
@@ -319,7 +321,6 @@ require (
 	gopkg.in/fsnotify/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	k8s.io/api v0.25.0 // indirect
-	k8s.io/apimachinery v0.25.0 // indirect
 	k8s.io/klog/v2 v2.70.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20220803162953-67bda5d908f1 // indirect
 	k8s.io/utils v0.0.0-20220728103510-ee6ede2d64ed // indirect

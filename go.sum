@@ -1369,19 +1369,10 @@ github.com/gorilla/websocket v1.4.1/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/ad
 github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/gorilla/websocket v1.5.0 h1:PPwGk2jz7EePpoHN/+ClbZu8SPxiqlu12wZP/3sWmnc=
 github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
-<<<<<<< HEAD
+github.com/grafana/alerting v0.0.0-20221123220210-67a9f4464f1f h1:fldqX6OqTkMVJcic9ye1FhVy9zBcxxzs5/stDfdCNE8=
+github.com/grafana/alerting v0.0.0-20221123220210-67a9f4464f1f/go.mod h1:BO51roH8bMRpAqeWxvnGePyCQoqgk1TiNISYKfoyHzQ=
 github.com/grafana/codejen v0.0.3 h1:tAWxoTUuhgmEqxJPOLtJoxlPBbMULFwKFOcRsPRPXDw=
 github.com/grafana/codejen v0.0.3/go.mod h1:zmwwM/DRyQB7pfuBjTWII3CWtxcXh8LTwAYGfDfpR6s=
-=======
-github.com/gosimple/slug v1.12.0 h1:xzuhj7G7cGtd34NXnW/yF0l+AGNfWqwgh/IXgFy7dnc=
-github.com/gosimple/slug v1.12.0/go.mod h1:UiRaFH+GEilHstLUmcBgWcI42viBN7mAb818JrYOeFQ=
-github.com/gosimple/unidecode v1.0.1 h1:hZzFTMMqSswvf0LBJZCZgThIZrpDHFXux9KeGmn6T/o=
-github.com/gosimple/unidecode v1.0.1/go.mod h1:CP0Cr1Y1kogOtx0bJblKzsVWrqYaqfNOnHzpgWw4Awc=
-github.com/grafana/alerting v0.0.0-20221114124403-e7c6a1e5f9c3 h1:abQqF2YBc91pZqOtKKyXniawjihHCEtwIcgav05SNDE=
-github.com/grafana/alerting v0.0.0-20221114124403-e7c6a1e5f9c3/go.mod h1:A8frE8MIqJOnAS8AQOBvkvc0HcFQ/5hYSoXU02/ncVs=
-github.com/grafana/codejen v0.0.2 h1:Ssp27X7SOnYxaPUTByW/6201tNV5Q60l1BSF+s3lRP8=
-github.com/grafana/codejen v0.0.2/go.mod h1:zmwwM/DRyQB7pfuBjTWII3CWtxcXh8LTwAYGfDfpR6s=
->>>>>>> 7a26e5f37c (more go.mod)
 github.com/grafana/cuetsy v0.1.1 h1:+1jaDDYCpvKlcOWJgBRbkc5+VZIClCEn5mbI+4PLZqM=
 github.com/grafana/cuetsy v0.1.1/go.mod h1:4KWkUOslwvRTpEv7wdQG0jDFTuJmU+0L9x0h4kWxa2A=
 github.com/grafana/dskit v0.0.0-20211011144203-3a88ec0b675f h1:FvvSVEbnGeM2bUivGmsiXTi8URJyBU7TcFEEoRe5wWI=
