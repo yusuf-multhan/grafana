@@ -5,8 +5,6 @@ import (
 	"testing"
 	"time"
 
-	ngmodels "github.com/grafana/grafana/pkg/services/ngalert/models"
-
 	"github.com/grafana/grafana/pkg/services/dashboards"
 	"github.com/grafana/grafana/pkg/services/secrets/database"
 
@@ -49,6 +47,5 @@ func setupAMTest(t *testing.T) *Alertmanager {
 
 func TestAlertmanager_ApplyConfig(t *testing.T) {
 	am := setupAMTest(t)
-
-	require.NoError(t, am.ApplyConfig(&ngmodels.AlertConfiguration{}))
+	require.False(t, am.Ready())
 }
