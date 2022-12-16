@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/url"
 	"time"
 
 	"github.com/grafana/alerting/alerting"
@@ -13,11 +12,6 @@ import (
 	apimodels "github.com/grafana/grafana/pkg/services/ngalert/api/tooling/definitions"
 	"github.com/prometheus/alertmanager/api/v2/models"
 	"github.com/prometheus/alertmanager/types"
-	"github.com/prometheus/common/model"
-)
-
-const (
-	maxTestReceiversWorkers = 10
 )
 
 var (
@@ -97,7 +91,6 @@ func (am *Alertmanager) TestReceivers(ctx context.Context, c apimodels.TestRecei
 				Status: c.Status,
 				Error:  c.Error,
 			})
-
 		}
 		resultReceivers = append(resultReceivers, TestReceiverResult{
 			Name:    resultReceiver.Name,
@@ -110,7 +103,6 @@ func (am *Alertmanager) TestReceivers(ctx context.Context, c apimodels.TestRecei
 		Receivers: resultReceivers,
 		NotifedAt: result.NotifedAt,
 	}, err
-
 }
 
 func (am *Alertmanager) GetReceivers(ctx context.Context) []apimodels.Receiver {
@@ -149,66 +141,4 @@ func (am *Alertmanager) GetReceivers(ctx context.Context) []apimodels.Receiver {
 	}
 
 	return apiReceivers
-}
-
-func newTestAlert(c apimodels.TestReceiversConfigBodyParams, startsAt, updatedAt time.Time) types.Alert {
-	var (
-		defaultAnnotations = model.LabelSet{
-			"summary":          "Notification test",
-			"__value_string__": "[ metric='foo' labels={instance=bar} value=10 ]",
-		}
-		defaultLabels = model.LabelSet{
-			"alertname": "TestAlert",
-			"instance":  "Grafana",
-		}
-	)
-
-	alert := types.Alert{
-		Alert: model.Alert{
-			Labels:      defaultLabels,
-			Annotations: defaultAnnotations,
-			StartsAt:    startsAt,
-		},
-		UpdatedAt: updatedAt,
-	}
-
-	if c.Alert != nil {
-		if c.Alert.Annotations != nil {
-			for k, v := range c.Alert.Annotations {
-				alert.Annotations[k] = v
-			}
-		}
-		if c.Alert.Labels != nil {
-			for k, v := range c.Alert.Labels {
-				alert.Labels[k] = v
-			}
-		}
-	}
-
-	return alert
-}
-
-func processNotifierError(config *apimodels.PostableGrafanaReceiver, err error) error {
-	if err == nil {
-		return nil
-	}
-
-	var urlError *url.Error
-	if errors.As(err, &urlError) {
-		if urlError.Timeout() {
-			return ReceiverTimeoutError{
-				Receiver: config,
-				Err:      err,
-			}
-		}
-	}
-
-	if errors.Is(err, context.DeadlineExceeded) {
-		return ReceiverTimeoutError{
-			Receiver: config,
-			Err:      err,
-		}
-	}
-
-	return err
 }

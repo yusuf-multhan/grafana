@@ -13,10 +13,6 @@ import (
 	"time"
 
 	"github.com/grafana/alerting/alerting"
-	"github.com/prometheus/alertmanager/config"
-	"github.com/prometheus/alertmanager/notify"
-	"github.com/prometheus/alertmanager/timeinterval"
-
 	"github.com/grafana/grafana/pkg/infra/kvstore"
 	"github.com/grafana/grafana/pkg/infra/log"
 	apimodels "github.com/grafana/grafana/pkg/services/ngalert/api/tooling/definitions"
@@ -26,6 +22,7 @@ import (
 	"github.com/grafana/grafana/pkg/services/ngalert/store"
 	"github.com/grafana/grafana/pkg/services/notifications"
 	"github.com/grafana/grafana/pkg/setting"
+	"github.com/prometheus/alertmanager/notify"
 )
 
 const (
@@ -49,10 +46,10 @@ type Alertmanager struct {
 	Base   *alerting.GrafanaAlertmanager
 	logger log.Logger
 
-	Settings            *setting.Cfg
-	Store               AlertingStore
-	fileStore           *FileStore
-	Metrics             *metrics.Alertmanager
+	Settings  *setting.Cfg
+	Store     AlertingStore
+	fileStore *FileStore
+	//Metrics             *metrics.Alertmanager
 	NotificationService notifications.Service
 
 	//notificationLog *nflog.Log
@@ -66,9 +63,7 @@ type Alertmanager struct {
 	//inhibitor  *inhibit.Inhibitor
 	// wg is for dispatcher, inhibitor, silences and notifications
 	// Across configuration changes dispatcher and inhibitor are completely replaced, however, silences, notification log and alerts remain the same.
-	// stopc is used to let silences and notifications know we are done.
-	wg    sync.WaitGroup
-	stopc chan struct{}
+	//wg sync.WaitGroup
 
 	//silencer *silence.Silencer
 	//silences *silence.Silences
@@ -114,7 +109,8 @@ func (m maintenanceOptions) MaintenanceFunc(state alerting.State) (int64, error)
 }
 
 func newAlertmanager(ctx context.Context, orgID int64, cfg *setting.Cfg, store AlertingStore, kvStore kvstore.KVStore,
-	peer alerting.ClusterPeer, decryptFn channels.GetDecryptedValueFn, ns notifications.Service, m *metrics.Alertmanager) (*Alertmanager, error) {
+	peer alerting.ClusterPeer, decryptFn channels.GetDecryptedValueFn, ns notifications.Service,
+	m *metrics.Alertmanager) (*Alertmanager, error) {
 
 	workingPath := filepath.Join(cfg.DataPath, workingDir, strconv.Itoa(int(orgID)))
 	fileStore := NewFileStore(orgID, kvStore, workingPath)
@@ -293,13 +289,13 @@ func (am *Alertmanager) ApplyConfig(dbCfg *ngmodels.AlertConfiguration) error {
 //	return tmpl, nil
 //}
 
-func (am *Alertmanager) buildMuteTimesMap(muteTimeIntervals []config.MuteTimeInterval) map[string][]timeinterval.TimeInterval {
-	muteTimes := make(map[string][]timeinterval.TimeInterval, len(muteTimeIntervals))
-	for _, ti := range muteTimeIntervals {
-		muteTimes[ti.Name] = ti.TimeIntervals
-	}
-	return muteTimes
-}
+//func (am *Alertmanager) buildMuteTimesMap(muteTimeIntervals []config.MuteTimeInterval) map[string][]timeinterval.TimeInterval {
+//	muteTimes := make(map[string][]timeinterval.TimeInterval, len(muteTimeIntervals))
+//	for _, ti := range muteTimeIntervals {
+//		muteTimes[ti.Name] = ti.TimeIntervals
+//	}
+//	return muteTimes
+//}
 
 type AlertingConfiguration struct {
 	AlertmanagerConfig    apimodels.PostableApiAlertingConfig
