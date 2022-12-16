@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"net/url"
 	"path/filepath"
 	"strconv"
 	"sync"
@@ -84,33 +83,33 @@ type Alertmanager struct {
 	//dispatcherMetrics *dispatch.DispatcherMetrics
 
 	reloadConfigMtx sync.RWMutex
-	config          *apimodels.PostableUserConfig
-	configHash      [16]byte
-	orgID           int64
+	//config          *apimodels.PostableUserConfig
+	//configHash      [16]byte
+	orgID int64
 
 	decryptFn channels.GetDecryptedValueFn
 }
 
-type maintanceOptions struct {
+type maintenanceOptions struct {
 	filepath             string
 	retention            time.Duration
 	maintenanceFrequency time.Duration
 	maintenanceFunc      func(alerting.State) (int64, error)
 }
 
-func (m maintanceOptions) Filepath() string {
+func (m maintenanceOptions) Filepath() string {
 	return m.filepath
 }
 
-func (m maintanceOptions) Retention() time.Duration {
+func (m maintenanceOptions) Retention() time.Duration {
 	return m.retention
 }
 
-func (m maintanceOptions) MaintenanceFrequency() time.Duration {
+func (m maintenanceOptions) MaintenanceFrequency() time.Duration {
 	return m.maintenanceFrequency
 }
 
-func (m maintanceOptions) MaintenanceFunc(state alerting.State) (int64, error) {
+func (m maintenanceOptions) MaintenanceFunc(state alerting.State) (int64, error) {
 	return m.maintenanceFunc(state)
 }
 
@@ -129,7 +128,7 @@ func newAlertmanager(ctx context.Context, orgID int64, cfg *setting.Cfg, store A
 		return nil, err
 	}
 
-	silencesOptions := maintanceOptions{
+	silencesOptions := maintenanceOptions{
 		filepath:             silencesFilePath,
 		retention:            retentionNotificationsAndSilences,
 		maintenanceFrequency: maintenanceNotificationAndSilences,
@@ -138,7 +137,7 @@ func newAlertmanager(ctx context.Context, orgID int64, cfg *setting.Cfg, store A
 		},
 	}
 
-	nflogOptions := maintanceOptions{
+	nflogOptions := maintenanceOptions{
 		filepath:             nflogFilepath,
 		retention:            retentionNotificationsAndSilences,
 		maintenanceFrequency: maintenanceNotificationAndSilences,
@@ -168,6 +167,8 @@ func newAlertmanager(ctx context.Context, orgID int64, cfg *setting.Cfg, store A
 		NotificationService: ns,
 		orgID:               orgID,
 		decryptFn:           decryptFn,
+		fileStore:           fileStore,
+		logger:              l,
 	}
 
 	return am, nil
@@ -267,30 +268,30 @@ func (am *Alertmanager) ApplyConfig(dbCfg *ngmodels.AlertConfiguration) error {
 	return outerErr
 }
 
-func (am *Alertmanager) getTemplate() (*alerting.Template, error) {
-	if !am.Ready() {
-		return nil, errors.New("alertmanager is not initialized")
-	}
-
-	paths := make([]string, 0, len(am.config.TemplateFiles))
-	for name := range am.config.TemplateFiles {
-		paths = append(paths, filepath.Join(am.WorkingDirPath(), name))
-	}
-	return am.templateFromPaths(paths...)
-}
-
-func (am *Alertmanager) templateFromPaths(paths ...string) (*alerting.Template, error) {
-	tmpl, err := alerting.FromGlobs(paths...)
-	if err != nil {
-		return nil, err
-	}
-	externalURL, err := url.Parse(am.Settings.AppURL)
-	if err != nil {
-		return nil, err
-	}
-	tmpl.ExternalURL = externalURL
-	return tmpl, nil
-}
+//func (am *Alertmanager) getTemplate() (*alerting.Template, error) {
+//	if !am.Ready() {
+//		return nil, errors.New("alertmanager is not initialized")
+//	}
+//
+//	paths := make([]string, 0, len(am.TemplateFiles))
+//	for name := range am.config.TemplateFiles {
+//		paths = append(paths, filepath.Join(am.WorkingDirPath(), name))
+//	}
+//	return am.templateFromPaths(paths...)
+//}
+//
+//func (am *Alertmanager) templateFromPaths(paths ...string) (*alerting.Template, error) {
+//	tmpl, err := alerting.FromGlobs(paths...)
+//	if err != nil {
+//		return nil, err
+//	}
+//	externalURL, err := url.Parse(am.Settings.AppURL)
+//	if err != nil {
+//		return nil, err
+//	}
+//	tmpl.ExternalURL = externalURL
+//	return tmpl, nil
+//}
 
 func (am *Alertmanager) buildMuteTimesMap(muteTimeIntervals []config.MuteTimeInterval) map[string][]timeinterval.TimeInterval {
 	muteTimes := make(map[string][]timeinterval.TimeInterval, len(muteTimeIntervals))
@@ -305,7 +306,6 @@ type AlertingConfiguration struct {
 	RawAlertmanagerConfig []byte
 
 	AlertmanagerTemplates *alerting.Template
-	TemplatesFunc         func() (*alerting.Template, error)
 
 	IntegrationsFunc func(receivers []*apimodels.PostableApiReceiver, templates *alerting.Template) (map[string][]*notify.Integration, error)
 }
@@ -356,7 +356,7 @@ func (am *Alertmanager) applyConfig(cfg *apimodels.PostableUserConfig, rawConfig
 		rawConfig = enc
 	}
 
-	if am.configHash != md5.Sum(rawConfig) {
+	if am.Base.ConfigHash() != md5.Sum(rawConfig) {
 		configChanged = true
 	}
 
@@ -378,7 +378,7 @@ func (am *Alertmanager) applyConfig(cfg *apimodels.PostableUserConfig, rawConfig
 	}
 
 	// With the templates persisted, create the template list using the paths.
-	tmpl, err := am.templateFromPaths(paths...)
+	tmpl, err := am.Base.TemplateFromPaths(am.Settings.AppURL, paths...)
 	if err != nil {
 		return err
 	}
@@ -388,7 +388,6 @@ func (am *Alertmanager) applyConfig(cfg *apimodels.PostableUserConfig, rawConfig
 		RawAlertmanagerConfig: rawConfig,
 		AlertmanagerConfig:    cfg.AlertmanagerConfig,
 		AlertmanagerTemplates: tmpl,
-		TemplatesFunc:         am.getTemplate,
 		IntegrationsFunc:      am.buildIntegrationsMap,
 	})
 	if err != nil {

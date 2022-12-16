@@ -15,12 +15,6 @@ import (
 
 const KVNamespace = "alertmanager"
 
-// State represents any of the two 'states' of the alertmanager. Notification log or Silences.
-// MarshalBinary returns the binary representation of this internal state based on the protobuf.
-//type State interface {
-//	MarshalBinary() ([]byte, error)
-//}
-
 // FileStore is in charge of persisting the alertmanager files to the database.
 // It uses the KVstore table and encodes the files as a base64 string.
 type FileStore struct {
