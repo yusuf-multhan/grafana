@@ -22,7 +22,6 @@ import (
 	"github.com/grafana/grafana/pkg/services/ngalert/store"
 	"github.com/grafana/grafana/pkg/services/notifications"
 	"github.com/grafana/grafana/pkg/setting"
-	"github.com/prometheus/alertmanager/notify"
 )
 
 const (
@@ -68,7 +67,7 @@ type Alertmanager struct {
 	//silencer *silence.Silencer
 	//silences *silence.Silences
 
-	receivers []*notify.Receiver
+	receivers []*alerting.Receiver
 
 	// muteTimes is a map where the key is the name of the mute_time_interval
 	// and the value represents all configured time_interval(s)
@@ -303,7 +302,7 @@ type AlertingConfiguration struct {
 
 	AlertmanagerTemplates *alerting.Template
 
-	IntegrationsFunc func(receivers []*apimodels.PostableApiReceiver, templates *alerting.Template) (map[string][]*notify.Integration, error)
+	IntegrationsFunc func(receivers []*apimodels.PostableApiReceiver, templates *alerting.Template) (map[string][]*alerting.Integration, error)
 }
 
 func (a AlertingConfiguration) DispatcherLimits() alerting.DispatcherLimits {
