@@ -219,7 +219,7 @@ export const AzureCredentialsForm: FunctionComponent<Props> = (props: Props) => 
                 <InlineFormLabel htmlFor="azure-client-secret" className="width-12">
                   Client Secret
                 </InlineFormLabel>
-                <Input id="azure-client-secret" className="width-25" placeholder="configured" disabled={disabled} />
+                <Input id="azure-client-secret" className="width-25" placeholder="configured" disabled />
               </div>
               {!disabled && (
                 <div className="gf-form">
